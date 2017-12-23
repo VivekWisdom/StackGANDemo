@@ -1,0 +1,6 @@
+*.pyc
+ckt_logs
+backup
+.DS_Store
+Data/birds
+Data/flowers
