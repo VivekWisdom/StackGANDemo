@@ -10,7 +10,6 @@ import pickle
 from misc.utils import get_image
 import scipy.misc
 import pandas as pd
-import joblib
 
 # from glob import glob
 
@@ -75,14 +74,12 @@ def save_data_list(inpath, outpath, filenames, filename_bbox):
     #
     outfile = outpath + str(LOAD_SIZE) + 'images.pickle'
     with open(outfile, 'wb') as f_out:
-        print(f_out)
-        joblib.dump(hr_images, f_out, protocol = 4)
+        pickle.dump(hr_images, f_out)
         print('save to: ', outfile)
     #
     outfile = outpath + str(lr_size) + 'images.pickle'
     with open(outfile, 'wb') as f_out:
-        print(f_out)
-        joblib.dump(lr_images, f_out)
+        pickle.dump(lr_images, f_out)
         print('save to: ', outfile)
 
 

@@ -4,7 +4,6 @@ from __future__ import print_function
 
 import numpy as np
 import pickle
-import joblib
 import random
 
 
@@ -76,7 +75,7 @@ class Dataset(object):
                 h1 = np.floor((ori_size - self._imsize) * np.random.random())
                 w1 = np.floor((ori_size - self._imsize) * np.random.random())
                 cropped_image =\
-                    images[i][w1: w1 + self._imsize, h1: h1 + self._imsize, :]
+                    images[i][int(w1): int(w1) + self._imsize, int(h1): int(h1) + self._imsize, :]
                 if random.random() > 0.5:
                     transformed_images[i] = np.fliplr(cropped_image)
                 else:
@@ -222,20 +221,20 @@ class TextDataset(object):
 
     def get_data(self, pickle_path, aug_flag=True):
         with open(pickle_path + self.image_filename, 'rb') as f:
-            images = joblib.load(f)
+            images = pickle.load(f)
             images = np.array(images)
             print('images: ', images.shape)
 
         with open(pickle_path + self.embedding_filename, 'rb') as f:
-            embeddings = joblib.load(f)
+            embeddings = pickle.load(f)
             embeddings = np.array(embeddings)
             self.embedding_shape = [embeddings.shape[-1]]
             print('embeddings: ', embeddings.shape)
         with open(pickle_path + '/filenames.pickle', 'rb') as f:
-            list_filenames = joblib.load(f)
+            list_filenames = pickle.load(f)
             print('list_filenames: ', len(list_filenames), list_filenames[0])
         with open(pickle_path + '/class_info.pickle', 'rb') as f:
-            class_id = joblib.load(f)
+            class_id = pickle.load(f)
 
         return Dataset(images, self.image_shape[0], embeddings,
                        list_filenames, self.workdir, None,
